@@ -31,7 +31,7 @@ This API is currently hosted [Live Here](https://jobs-api-bnvf.onrender.com).
 1. Clone the repository:
 
     ```bash
-    git clone <repository_url>
+    git clone https://github.com/Olusegun-Light/Jobs-API
     cd jobs-api
     ```
 

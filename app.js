@@ -1,5 +1,7 @@
 require("dotenv").config();
 require("express-async-errors");
+const bodyParser = require("body-parser");
+
 
 // Extra security packages
 const helmet = require("helmet");
@@ -14,6 +16,9 @@ const swaggerDocument = YAML.load("./swagger.yaml");
 
 const express = require("express");
 const app = express();
+
+app.use(express.static(__dirname));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Connect DB
 const connectDB = require("./db/connect");
@@ -42,7 +47,7 @@ app.use(cors());
 app.use(xss());
 
 app.get("/", (req, res) => {
-  res.send("<h1>Jobs Api </h1> <a href='/api-docs'>Documentation</a>")
+  res.sendFile(__dirname + "/index.html")
 })
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
@@ -54,7 +59,7 @@ app.use("/api/v1/jobs", authenticateUser, jobsRouter);
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 9000;
 
 const start = async () => {
   try {
